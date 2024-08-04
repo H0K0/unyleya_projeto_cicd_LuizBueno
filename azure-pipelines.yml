@@ -25,11 +25,15 @@ steps:
 # Command line
 # Run a command line script using Bash on Linux and macOS and cmd.exe on Windows
 
-- task: CmdLine@2
-  inputs:
-    script: 'mkdir d:\a\1\MobEAD' 
-    #workingDirectory: # Optional
-    #failOnStderr: false # Optional
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'dockerHubConnection'
+      repository: 'h0k0/unyleya_projeto_cicd'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.BuildId)
 
 - task: NuGetToolInstaller@1
 - task: NuGetCommand@2
